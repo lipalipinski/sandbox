@@ -23,6 +23,6 @@ This repository contains simple, training projects I have created during courses
    * v2.1:
      * ignores the guess if guess value is the same as the previous one, and prompt "Give me something new" message.
      * asks for a value again if player puts non integer value as a guess or presses ENTER key without entering a number.
-     * returns "WARM!" or "COLD!" if the distance between new guess and the previous one is the same. "WARM!" if the distance is smaller than two guesses later, or than the initial cold/warm threshold, "COLD!" otherwise.
+     * returns "WARM!" or "COLD!" if the distance between new guess and the previous one is the same. "WARM!" if the distance is smaller than two guesses before (or than the initial cold/warm threshold), "COLD!" otherwise.
 
 *JL 2022*
