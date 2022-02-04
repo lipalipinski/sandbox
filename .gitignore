@@ -1,2 +1,4 @@
 #ignore wyniki lotto.txt (made by lotto.py)
-python/Lotto\ Generator/wyniki\ lotto.txt 
+python/LottoGenerator/wyniki\ lotto.txt 
+.DS_Store
+*.swp
