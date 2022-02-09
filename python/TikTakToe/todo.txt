@@ -1,13 +1,26 @@
+======== BUGS:
+- po wygranej O nie zmienia rozpoczynającego gracza
+
+
+
+
+========= TO DO's
+- kwadrat matryca
 
 - multiplayer/singleplayer
 
-- poprawa algorytmu
+- poprawa algorytmu ai
 
 - wybór nazwy gracza
 
 - statystyki graczy
 
-- display win 
+- display win
+
+- colors
+
+- poprawa logiki xy w kodzie
+
 
 -README.md
 
