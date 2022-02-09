@@ -179,7 +179,7 @@ def winner_check(m):
 def play_again():
     wanna = ''
     while wanna not in ['y', 'Y', 'n', 'N']:
-        wanna = input('Do you want play again (Y/N): ')
+        wanna = input('\nDo you want play again (Y/N): ')
 
 
     if wanna in ['y' , 'Y']:
