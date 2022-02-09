@@ -6,15 +6,19 @@ This repository contains simple, training projects I have created during courses
 ## Content overview
 More detailed information can be found in the README.md files in each project's directory.
 ### Python 3.9.7
- * Lotto Generator
+ * #### TicTacToe
+
+ A console game. Originally this was a milestone project on the Python bootcamp I took. I kept on adding new features, such as win detection, artifacial player etc.
+
+ * #### Lotto Generator
 
    My very first project in Python. Generates desired number of 6 unique, random number sets, and saves them in "wyniki lotto.txt".
 
- * Guessing Game
+ * #### Guessing Game
 
    First assignment from the Perian Data 2022 Complete Python Bootcamp. Player has to guess the number between 1 and 100. The game tells, whether each guess is closer to the target than the previous one.
 
- * Guessing Game 2
+ * #### Guessing Game 2
 
    My take on the game, got rid of errors created by user putting incorrect data, added chart showing player's progress etc.
 

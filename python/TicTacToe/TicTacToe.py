@@ -1,73 +1,71 @@
+#============================================
+#
+#                TicTacToe v1
+#                2022 by JL
 #========== DISPLAY MAIN MATRIX =============
-
 def display(m):
 
     matrix =[
-    '                 .          .....         ......    ',
-    '                . .         .    .       .          ',
-    '               .   .        .    .       .          ',
-    '              .     .       .....        .          ',
-    '              .......       .    .       .          ',
-    '              .     .       .    .       .          ',
-    '              .     .       .....         ......    ',
-    '                                                    ',
-    '           ---------------------------------------- ',
-    '       .  |            ][            ][             ',
-    '      ..  |            ][            ][             ',
-    '     . .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '          |            ][            ][             ',
-    '          |======================================== ',
-    '   ....   |            ][            ][             ',
-    '  .    .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '      .   |            ][            ][             ',
-    '     .    |            ][            ][             ',
-    '    .     |            ][            ][             ',
-    '  ......  |            ][            ][             ',
-    '          |            ][            ][             ',
-    '          |======================================== ',
-    '   ....   |            ][            ][             ',
-    '  .    .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '   ....   |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '       .  |            ][            ][             ',
-    '  .    .  |            ][            ][             ',
-    '   ....   |            ][            ][             ']
+    '                  .....        .........        .......     ',
+    '                 .     .        .       .      .            ',
+    '                .       .       .       .      .            ',
+    '                .........       ........       .            ',
+    '                .       .       .       .      .            ',
+    '                .       .       .       .      .            ',
+    '               ...     ...     .........        .......     ',
+    '                                                            ',
+    '       .                   ][              ][               ',
+    '     . .                   ][              ][               ',
+    '    .  .                   ][              ][               ',
+    '       .                   ][              ][               ',
+    '       .                   ][              ][               ',
+    '       .                   ][              ][               ',
+    '       .                   ][              ][               ',
+    '      ...                  ][              ][               ',
+    '             ============================================== ',
+    '                           ][              ][               ',
+    '    .....                  ][              ][               ',
+    '   .     .                 ][              ][               ',
+    '         .                 ][              ][               ',
+    '        .                  ][              ][               ',
+    '       .                   ][              ][               ',
+    '     .                     ][              ][               ',
+    '   .......                 ][              ][               ',
+    '             ============================================== ',
+    '    .....                  ][              ][               ',
+    '   .     .                 ][              ][               ',
+    '         .                 ][              ][               ',
+    '    .....                  ][              ][               ',
+    '         .                 ][              ][               ',
+    '         .                 ][              ][               ',
+    '   .     .                 ][              ][               ',
+    '    .....                  ][              ][               ']
 
     large_x = [
-    ' \\\    //  ',
-    '  \\\  //   ',
-    '   \\\//    ',
-    '   //\\\    ',
-    '  //  \\\   ',
-    ' //    \\\\  ']
+    '  \\\    // ',
+    '   \\\  //  ',
+    '    \\\//   ',
+    '    //\\\   ',
+    '   //  \\\  ',
+    '  //    \\\\ ']
 
     large_o = [
-    '//======\\\ ',
-    '||      || ',
-    '||      || ',
-    '||      || ',
-    '||      || ',
-    '\\\\======// ']
-
-    mapa = [{'r1': 10, 'r2': 15, 'yl': 12, 'yr': 21}]   #r1, r2 - nr of first/last row; yl, yr - nr of first/last char
+    '  //====\\\  ',
+    ' //      \\\ ',
+    ' ||      || ',
+    ' ||      || ',
+    ' \\\\      // ',
+    '  \\\\====//  ']
 
 
     for y in [0,1,2]:      #row
         for x in [0,1,2]:  #column
             if m[y][x] == 'O':
                 for i, line in enumerate(large_o):
-                    matrix[10+(y*9)+i] = matrix[10+(y*9)+i][:(12+(14*x))] + line + matrix[10+(y*9)+i][23+(14*x):]
+                    matrix[9+(y*9)+i] = matrix[9+(y*9)+i][:(14+(16*x))] + line + matrix[10+(y*9)+i][26+(16*x):]
             elif m[y][x] == 'X':
                 for i, line in enumerate(large_x):
-                    matrix[10+(y*9)+i] = matrix[10+(y*9)+i][:(12+(14*x))] + line + matrix[10+(y*9)+i][23+(14*x):]
-
-
+                    matrix[9+(y*9)+i] = matrix[9+(y*9)+i][:(14+(16*x))] + line + matrix[10+(y*9)+i][25+(16*x):]
 
     for line in matrix:
         print(line)
@@ -75,7 +73,7 @@ def display(m):
 #========= DISPLAY PLAYER =================
 
 def display_turn(char):
-    print(f"\nIt's {char}'s turn:")
+    print(f"\nIt's {char}'s turn:\n")
 
 
 #========== USER MOVE INPUT ================
@@ -163,15 +161,15 @@ def winner_check(m):
     w = 0
     while w < len(m_dep)-2:
         if m_dep[w] == m_dep[w+1] == m_dep[w+2] != ' ':
-            print(f'\n{m_dep[w]} HAS WON!!!')
+            print(f'\n"{m_dep[w]}" HAS WON!!!')
             return True
         w += 3
 
-    for i in range(0, len(m_dep)):                          # REMIS case check
+    for i in range(0, len(m_dep)):                          # tie case check
         if m_dep[i] == ' ':
             break
     else:
-        return '\nREMIS\n'
+        return 'TIE'
 
     return False
 
@@ -196,18 +194,25 @@ def clr_scr():
 # ========================== PLAY THE GAME =====================================
 
 quit_game = False
-turn = True
+turn = False
 game_ended = False
 new_game = True
+first_move = True
 
 while quit_game == False:
 
     if new_game:
         print('Welcome to the new game!')
-        matrix = [[' ',' ',' '],                #clean up main matrix
+        matrix = [[' ',' ',' '],                # clean up main matrix
                   [' ',' ',' '],
                   [' ',' ',' ']]
-        new_game = False                        #turn of new game prompt
+        if first_move:                          #if first move = true player starts the game
+            turn = True
+        else:                                   #else - AI starts
+            turn = False
+        first_move = not first_move             #make the other player start next game
+        new_game = False                        # turn off new game prompt
+
 
     if turn:                                    # check which player moves
         player = 'X'
@@ -232,20 +237,22 @@ while quit_game == False:
     if winner_check(matrix) == True:
         clr_scr()
         display(matrix)
-        winner_check(matrix)                         #check if game has been won
-        quit_game = not play_again()            #if yes, play again menu
+        winner_check(matrix)                    # check if game has been won
+        quit_game = not play_again()            # if yes, play again menu
         new_game = True                         # turn on new game prompt
 
-    elif winner_check(matrix) == False:         #if game is not won, continue
+
+    elif winner_check(matrix) == False:         # if game is not won, continue
         pass
 
     else:
-        display(matrix)                         #if it's a REMIS
-        print("It's a remis!")                  # say it
-        quit_game = not play_again()            #ask for new game
-        new_game = True                         #turn on new game prompt
+        clr_scr()
+        display(matrix)                         # if it's a REMIS
+        print("\nIt's a tie!")                  # say it
+        quit_game = not play_again()            # ask for new game
+        new_game = True                         # turn on new game prompt
 
 
-    turn = not turn                             #change player
+    turn = not turn                             # change player
 
-print('Bye!')
+print('\nBye! \nTicTacToe by JL 2022')
