@@ -142,20 +142,21 @@ def winner_check(m):
     m_dep = []
     m_depx = []
     m_depy = []
+    m_depd = []
 
-
+    i = 2
     for x in [0,1,2]:
+        m_dep.append(m[x][x])
+        m_depd.append(m[i][x])
+        i -= 1
         for y in [0,1,2]:
             m_depx.append(m[x][y])
             m_depy.append(m[y][x])
+            pass
 
 
-    for i in [2,1,0]:
-        for j in [0,1,2]:
-            m_depx.append(m[j][j])
-            m_depy.append(m[i][j])
+    m_dep += m_depd + m_depx + m_depy
 
-    m_dep = m_depx + m_depy
 
 
 
@@ -229,7 +230,9 @@ while quit_game == False:
 
 
     if winner_check(matrix) == True:
-        display(matrix)                         #check if game has been won
+        clr_scr()
+        display(matrix)
+        winner_check(matrix)                         #check if game has been won
         quit_game = not play_again()            #if yes, play again menu
         new_game = True                         # turn on new game prompt
 

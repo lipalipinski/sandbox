@@ -1,5 +1,5 @@
 ======== BUGS:
-- remis przy wygranej????
+- po wygranej O nie zmienia rozpoczynającego gracza
 
 
 
