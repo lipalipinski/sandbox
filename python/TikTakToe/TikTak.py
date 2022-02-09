@@ -1,8 +1,8 @@
-#========== DISPLAY 3x3 MATRIX =============
+#========== DISPLAY MAIN MATRIX =============
 def display(m):
 
     matrix =[
-    '                .        .....       ......   ',
+    '\n                .        .....       ......   ',
     '               . .       .    .     .         ',
     '              .   .      .    .     .         ',
     '             .     .     .....      .         ',
@@ -76,7 +76,7 @@ def display(m):
 #========= DISPLAY PLAYER =================
 
 def display_turn(char):
-    print(f"It's {char}'s turn:")
+    print(f"\nIt's {char}'s turn:")
 
 
 #========== USER MOVE INPUT ================
@@ -163,7 +163,7 @@ def winner_check(m):
     w = 0
     while w < len(m_dep)-2:
         if m_dep[w] == m_dep[w+1] == m_dep[w+2] != ' ':
-            print(f'{m_dep[w]} HAS WON!!!')
+            print(f'\n{m_dep[w]} HAS WON!!!')
             return True
         w += 3
 
@@ -171,7 +171,7 @@ def winner_check(m):
         if m_dep[i] == ' ':
             break
     else:
-        return 'REMIS'
+        return '\nREMIS\n'
 
     return False
 
@@ -217,30 +217,33 @@ while quit_game == False:
     clr_scr()
     if turn:                                    # human moves
         display(matrix)
-        display_turn(player)
+        display_turn(player)                    # who's turn it is
         move = user_position(matrix)
+        matrix = put_x(move , player , matrix)  # update matrix
+
     else:                                       # ai moves
         move = player_b(matrix, move)
-
-    matrix = put_x(move , player , matrix)      # update matrix
-
-    clr_scr()
-    display(matrix)
+        matrix = put_x(move , player , matrix)  # update matrix
+        clr_scr()
 
 
-    if winner_check(matrix) == True:            #check if game has been won
+
+
+    if winner_check(matrix) == True:
+        display(matrix)                         #check if game has been won
         quit_game = not play_again()            #if yes, play again menu
         new_game = True                         # turn on new game prompt
 
     elif winner_check(matrix) == False:         #if game is not won, continue
         pass
 
-    else:                                       #if it's a REMIS
+    else:
+        display(matrix)                         #if it's a REMIS
         print("It's a remis!")                  # say it
         quit_game = not play_again()            #ask for new game
         new_game = True                         #turn on new game prompt
 
 
-    turn = not turn                             #change player 
+    turn = not turn                             #change player
 
 print('Bye!')
