@@ -46,12 +46,12 @@ def display(m):
     '  //    \\\\ ']
 
     large_o = [
-    '  //===\\\  ',
-    ' //     \\\ ',
-    ' ||     || ',
-    ' ||     || ',
-    ' \\\\     // ',
-    '  \\\\===//  ']
+    '  //====\\\  ',
+    ' //      \\\ ',
+    ' ||      || ',
+    ' ||      || ',
+    ' \\\\      // ',
+    '  \\\\====//  ']
 
     mapa = [{'r1': 10, 'r2': 15, 'yl': 12, 'yr': 21}]   #r1, r2 - nr of first/last row; yl, yr - nr of first/last char
 
@@ -60,7 +60,7 @@ def display(m):
         for x in [0,1,2]:  #column
             if m[y][x] == 'O':
                 for i, line in enumerate(large_o):
-                    matrix[9+(y*9)+i] = matrix[9+(y*9)+i][:(14+(16*x))] + line + matrix[10+(y*9)+i][25+(16*x):]
+                    matrix[9+(y*9)+i] = matrix[9+(y*9)+i][:(14+(16*x))] + line + matrix[10+(y*9)+i][26+(16*x):]
             elif m[y][x] == 'X':
                 for i, line in enumerate(large_x):
                     matrix[9+(y*9)+i] = matrix[9+(y*9)+i][:(14+(16*x))] + line + matrix[10+(y*9)+i][25+(16*x):]
