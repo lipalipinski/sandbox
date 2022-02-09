@@ -1,0 +1,11 @@
+- a1 zamiast row column
+
+- multiplayer/singleplayer
+
+- poprawa algorytmu
+
+- wybór nazwy gracza
+
+- statystyki graczy
+
+- clear screen

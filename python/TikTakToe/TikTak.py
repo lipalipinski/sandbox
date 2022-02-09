@@ -17,7 +17,7 @@ def display_turn(char):
 #========== USER MOVE INPUT ================
 def user_position(m):
 
-    move = ['' , '']
+    move = ['' , '']   #[abc, 123]
     range_123 = [1 , 2 , 3]
     range_abc = {'a' : 0 , 'b' : 1 , 'c' : 2}
     free = False
@@ -25,18 +25,15 @@ def user_position(m):
 
     while free == False:                                      # check if desired position is free
 
-        while move[1] not in range_abc.keys():                # column input validation
-            move[1] = input('Choose a column (a, b, c): ')
-            if move[1] not in range_abc.keys():
-                print('a, b, or c?')
-
-        while move[0] not in range_123:                         # row input validation
-            move[0] = input('Choose a row (1, 2, 3): ')
-            if move[0].isdigit() and int(move[0]) in range_123:
-                move[0] = int(move[0])
+        while move[0] not in range_123 or move[1] not in range_abc.keys():
+            inp = input('Type your move (e.g. a1, b2), and hit [ENTER]: ')
+            if len(inp) == 2:                                       #len(inp) check
+                move[1] = inp[0]
+            if inp[1].isdigit() and int(inp[1]) in range_123:
+                move[0] = int(inp[1])
             else:
-                print('1, 2, or 3?')
-
+                print('Entered value is not valid')
+                continue
 
 
         move[1] = range_abc[move[1]]                            # maping user-friendly input values to matrix
@@ -49,6 +46,20 @@ def user_position(m):
             free = True
 
     return move
+
+
+
+#============================ PLAYER B =========================
+def player_b(m, last_move):
+    if m[1][1] == ' ':
+        return [1, 1]
+    elif m[last_move[1]][last_move[0]] == ' ':
+        return [last_move[1] , last_move[0]]
+    else:
+        for i in [0,1,2]:
+            for j in [0,1,2]:
+                if m[i][j] == ' ':
+                    return [i , j]
 
 
 
@@ -67,6 +78,7 @@ def winner_check(m):
     m_depx = []
     m_depy = []
 
+
     for x in [0,1,2]:
         for y in [0,1,2]:
             m_depx.append(m[x][y])
@@ -80,25 +92,37 @@ def winner_check(m):
 
     m_dep = m_depx + m_depy
 
-    for w in range(0, len(m_dep)-2):
+
+
+    w = 0
+    while w < len(m_dep)-2:
         if m_dep[w] == m_dep[w+1] == m_dep[w+2] != ' ':
             print(f'{m_dep[w]} HAS WON!!!')
             return True
+        w += 3
+
+    for i in range(0, len(m_dep)):                          # REMIS case check
+        if m_dep[i] == ' ':
+            break
+    else:
+        return 'REMIS'
 
     return False
 
 
 #============== PLAY AGAIN PROMPT ================
 def play_again():
-    ans = ''
-    while ans not in ['y', 'Y', 'n', 'N']:
-        ans = input('Do you want play again (Y/N): ')
-    if ans in ['y' , 'Y']:
+    wanna = ''
+    while wanna not in ['y', 'Y', 'n', 'N']:
+        wanna = input('Do you want play again (Y/N): ')
+
+
+    if wanna in ['y' , 'Y']:
         return True
     else:
         return False
 
-#============================================== PLAY THE GAME ========================
+
 quit_game = False
 turn = True
 game_ended = False
@@ -108,9 +132,7 @@ while quit_game == False:
 
     if new_game:
         print('Welcome to the new game!')
-        matrix = [[' ',' ',' '],
-                  [' ',' ',' '],
-                  [' ',' ',' ']]
+        matrix = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]
         new_game = False
 
     if turn:
@@ -120,14 +142,25 @@ while quit_game == False:
 
     display(matrix)
     display_turn(player)
-    move = user_position(matrix)
+    if turn:
+        move = user_position(matrix)
+    else:
+        move = player_b(matrix, move)
     put_x(move , player , matrix)
     display(matrix)
 
 
-    if winner_check(matrix):
-        user_quit = not play_again()
+    if winner_check(matrix) == True:
+        quit_game = not play_again()
         new_game = True
+        turn = not turn
+    elif winner_check(matrix) == False:
+        pass
+    else:
+        print("It's a remis!")
+        quit_game = not play_again()
+        new_game = True
+        turn = not turn
 
     turn = not turn
 
