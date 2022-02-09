@@ -1,11 +1,76 @@
 #========== DISPLAY 3x3 MATRIX =============
 def display(m):
-    print(f'  a b c')
-    print(f'1 {m[0][0]}|{m[0][1]}|{m[0][2]}')
-    print(' -------')
-    print(f'2 {m[1][0]}|{m[1][1]}|{m[1][2]}')
-    print(' -------')
-    print(f'3 {m[2][0]}|{m[2][1]}|{m[2][2]}')
+
+    matrix =[
+    '                .        .....       ......   ',
+    '               . .       .    .     .         ',
+    '              .   .      .    .     .         ',
+    '             .     .     .....      .         ',
+    '             .......     .    .     .         ',
+    '             .     .     .    .     .         ',
+    '             .     .     .....       ......   ',
+    '                                              ',
+    '           ---------------------------------- ',
+    '       .  |          ][          ][           ',
+    '      ..  |          ][          ][           ',
+    '     . .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '          |          ][          ][           ',
+    '          |================================== ',
+    '   ....   |          ][          ][           ',
+    '  .    .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '      .   |          ][          ][           ',
+    '     .    |          ][          ][           ',
+    '    .     |          ][          ][           ',
+    '  ......  |          ][          ][           ',
+    '          |          ][          ][           ',
+    '          |================================== ',
+    '   ....   |          ][          ][           ',
+    '  .    .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '   ....   |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '       .  |          ][          ][           ',
+    '  .    .  |          ][          ][           ',
+    '   ....   |          ][          ][           ']
+
+    large_x = [
+    '\\\    // ',
+    ' \\\  //  ',
+    '  \\\//   ',
+    '  //\\\   ',
+    ' //  \\\  ',
+    '//    \\\\ ']
+
+    large_o = [
+    '//====\\\ ',
+    '||    || ',
+    '||    || ',
+    '||    || ',
+    '||    || ',
+    '\\\\====// ']
+
+    mapa = [{'r1': 10, 'r2': 15, 'yl': 12, 'yr': 21}]   #r1, r2 - nr of first/last row; yl, yr - nr of first/last char
+
+
+    for y in [0,1,2]:      #row
+        for x in [0,1,2]:  #column
+            if m[y][x] == 'O':
+                for i, line in enumerate(large_o):
+                    matrix[10+(y*9)+i] = matrix[10+(y*9)+i][:(12+(12*x))] + line + matrix[10+(y*9)+i][21+(12*x):]
+            elif m[y][x] == 'X':
+                for i, line in enumerate(large_x):
+                    matrix[10+(y*9)+i] = matrix[10+(y*9)+i][:(12+(12*x))] + line + matrix[10+(y*9)+i][21+(12*x):]
+
+
+
+
+    for line in matrix:
+        print(line)
 
 
 #========= DISPLAY PLAYER =================
@@ -17,7 +82,7 @@ def display_turn(char):
 #========== USER MOVE INPUT ================
 def user_position(m):
 
-    move = ['' , '']   #[abc, 123]
+    move = ['' , '']   #[column_abc, row_123]
     range_123 = [1 , 2 , 3]
     range_abc = {'a' : 0 , 'b' : 1 , 'c' : 2}
     free = False
@@ -27,9 +92,13 @@ def user_position(m):
 
         while move[0] not in range_123 or move[1] not in range_abc.keys():
             inp = input('Type your move (e.g. a1, b2), and hit [ENTER]: ')
+
             if len(inp) == 2:                                       #len(inp) check
                 move[1] = inp[0]
-            if inp[1].isdigit() and int(inp[1]) in range_123:
+            else:
+                continue
+
+            if inp[1].isdigit() and int(inp[1]) in range_123:       #user input validation
                 move[0] = int(inp[1])
             else:
                 print('Entered value is not valid')
@@ -67,9 +136,6 @@ def player_b(m, last_move):
 def put_x(move , char , m):
     m[move[0]][move[1]] = char
     return m
-
-
-
 
 
 #=============== WINNER CHECK ===============
@@ -122,6 +188,12 @@ def play_again():
     else:
         return False
 
+#============ CLEAR SCREEN =====================
+def clr_scr():
+    print('\n'*100)
+
+
+# ========================== PLAY THE GAME =====================================
 
 quit_game = False
 turn = True
@@ -132,36 +204,43 @@ while quit_game == False:
 
     if new_game:
         print('Welcome to the new game!')
-        matrix = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]
-        new_game = False
+        matrix = [[' ',' ',' '],                #clean up main matrix
+                  [' ',' ',' '],
+                  [' ',' ',' ']]
+        new_game = False                        #turn of new game prompt
 
-    if turn:
-        player = 'x'
+    if turn:                                    # check which player moves
+        player = 'X'
     else:
-        player = 'o'
+        player = 'O'
 
-    display(matrix)
-    display_turn(player)
-    if turn:
+    clr_scr()
+    if turn:                                    # human moves
+        display(matrix)
+        display_turn(player)
         move = user_position(matrix)
-    else:
+    else:                                       # ai moves
         move = player_b(matrix, move)
-    put_x(move , player , matrix)
+
+    matrix = put_x(move , player , matrix)      # update matrix
+
+    clr_scr()
     display(matrix)
 
 
-    if winner_check(matrix) == True:
-        quit_game = not play_again()
-        new_game = True
-        turn = not turn
-    elif winner_check(matrix) == False:
-        pass
-    else:
-        print("It's a remis!")
-        quit_game = not play_again()
-        new_game = True
-        turn = not turn
+    if winner_check(matrix) == True:            #check if game has been won
+        quit_game = not play_again()            #if yes, play again menu
+        new_game = True                         # turn on new game prompt
 
-    turn = not turn
+    elif winner_check(matrix) == False:         #if game is not won, continue
+        pass
+
+    else:                                       #if it's a REMIS
+        print("It's a remis!")                  # say it
+        quit_game = not play_again()            #ask for new game
+        new_game = True                         #turn on new game prompt
+
+
+    turn = not turn                             #change player 
 
 print('Bye!')
