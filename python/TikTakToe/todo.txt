@@ -1,5 +1,4 @@
 ======== BUGS:
-- po wygranej O nie zmienia rozpoczynającego gracza
 
 
 

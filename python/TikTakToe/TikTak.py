@@ -230,7 +230,8 @@ while quit_game == False:
         display(matrix)
         winner_check(matrix)                         #check if game has been won
         quit_game = not play_again()            #if yes, play again menu
-        new_game = True                         # turn on new game prompt
+        new_game = True
+        turn = not turn                      # turn on new game prompt
 
     elif winner_check(matrix) == False:         #if game is not won, continue
         pass
