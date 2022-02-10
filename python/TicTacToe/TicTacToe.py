@@ -69,7 +69,23 @@ def display(m):
 
     for line in matrix:
         print(line)
+#============ MAIN MENU ===================
+def main_menu():
+    '''
+    1 - single player, 2- multiplayer 3, quit
+    '''
 
+    option = 0
+    print('\nWelcome to TicTacToe by JL!\n')
+
+    while option not in [1,2,3]:
+        choice = input('MENU:\n 1 - single player\n 2 - multi player\n 3 - quit\n')
+        if choice.isdigit():
+            option = int(choice)
+        else:
+            continue
+
+    return option
 #========= DISPLAY PLAYER =================
 
 def display_turn(char):
@@ -117,7 +133,7 @@ def user_position(m):
 
 #============================ PLAYER B =========================
 def player_b(m, last_move):
-    if m[1][1] == ' ':
+    if m[1][1] == ' ':                              #if center is free, go for it
         return [1, 1]
     elif m[last_move[1]][last_move[0]] == ' ':
         return [last_move[1] , last_move[0]]
@@ -175,17 +191,21 @@ def winner_check(m):
 
 
 #============== PLAY AGAIN PROMPT ================
-def play_again():
+def play_again(menu):
     wanna = ''
     while wanna not in ['y', 'Y', 'n', 'N']:
         wanna = input('\nDo you want play again (Y/N): ')
 
 
     if wanna in ['y' , 'Y']:
-        return True
+        return menu
     else:
-        return False
+        return 0
 
+
+#============ GOOD BYE =========================
+def goodbye():
+    print('\nBye! \nTicTacToe by JL 2022')
 #============ CLEAR SCREEN =====================
 def clr_scr():
     print('\n'*100)
@@ -198,11 +218,17 @@ turn = False
 game_ended = False
 new_game = True
 first_move = True
+menu = 0
 
-while quit_game == False:
+while menu != 3:
 
     if new_game:
-        print('Welcome to the new game!')
+        clr_scr()
+        if menu == 0:
+            menu = main_menu()                      # 1 - single player, 2 - multiplayer, 3 - quit
+        if menu == 3:
+            break
+
         matrix = [[' ',' ',' '],                # clean up main matrix
                   [' ',' ',' '],
                   [' ',' ',' ']]
@@ -226,10 +252,16 @@ while quit_game == False:
         move = user_position(matrix)
         matrix = put_x(move , player , matrix)  # update matrix
 
-    else:                                       # ai moves
-        move = player_b(matrix, move)
-        matrix = put_x(move , player , matrix)  # update matrix
-        clr_scr()
+    else:
+        if menu == 1:                                  # ai moves
+            move = player_b(matrix, move)
+            matrix = put_x(move , player , matrix)  # update matrix
+            clr_scr()
+        elif menu == 2:
+            display(matrix)
+            display_turn(player)                    # who's turn it is
+            move = user_position(matrix)
+            matrix = put_x(move , player , matrix)
 
 
 
@@ -238,7 +270,7 @@ while quit_game == False:
         clr_scr()
         display(matrix)
         winner_check(matrix)                    # check if game has been won
-        quit_game = not play_again()            # if yes, play again menu
+        menu = play_again(menu)                     # yes = play again, no = show main menu
         new_game = True                         # turn on new game prompt
 
 
@@ -249,10 +281,10 @@ while quit_game == False:
         clr_scr()
         display(matrix)                         # if it's a REMIS
         print("\nIt's a tie!")                  # say it
-        quit_game = not play_again()            # ask for new game
+        menu =  play_again(menu)            # ask for new game
         new_game = True                         # turn on new game prompt
 
 
     turn = not turn                             # change player
 
-print('\nBye! \nTicTacToe by JL 2022')
+goodbye()
