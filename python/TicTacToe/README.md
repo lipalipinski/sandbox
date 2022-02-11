@@ -16,6 +16,7 @@ Some of the features I have added since then:
   Still in development, but it's playable
   * ##### User move validation
   * ##### Bigger board  display  
+  * ##### Single/multi-player
 
 More to come!
 

@@ -4,9 +4,6 @@
 
 
 ========= TO DO's
-- kwadrat matryca
-
-- multiplayer/singleplayer
 
 - poprawa algorytmu ai
 
@@ -26,4 +23,4 @@
 ========= DONE:
 
 - main menu
--multiplayer 
+-multiplayer
