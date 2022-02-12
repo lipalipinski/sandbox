@@ -5,13 +5,9 @@
 
 ========= TO DO's
 
-- poprawa algorytmu ai
-
 - wybór nazwy gracza
 
 - statystyki graczy
-
-- display win
 
 - colors
 

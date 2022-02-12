@@ -133,7 +133,55 @@ def user_position(m):
 
 
 #============================ PLAYER B =========================
-def player_b(m, last_move):
+def player_b(m, last_move, player_mrk):
+    """
+    m - matryca gry
+    last_move - [0-2, 02]
+    player_mrk - ''
+    """
+
+
+    m_dep = []
+    m_depx = []
+    m_depy = []
+    m_depd = []
+
+    i = 2
+    for x in [0,1,2]:
+        m_dep.append((m[x][x],(x,x)))
+        m_depd.append((m[i][x],(i,x)))
+        i -= 1
+        for y in [0,1,2]:
+            m_depx.append((m[x][y],(x,y)))
+            m_depy.append((m[y][x],(y,x)))
+            pass
+
+
+    m_dep += m_depd + m_depx + m_depy
+
+
+    w = 0                                           # check for winning oportunity
+    while w < len(m_dep)-2:
+        m_check = [m_dep[w], m_dep[w+1], m_dep[w+2]]
+        for i in [0,1,2]:
+            print(m_check[-i][0],m_check[1-i][0], m_check[2-i][0])
+            if m_check[0-i][0] == ' ' and m_check[1-i][0] == m_check[2-i][0] == player_mrk:
+                return m_check[0-i][1]
+                pass
+            w += 1
+
+    w = 0                                           # check for block oportunity
+    while w < len(m_dep)-2:
+        m_check = [m_dep[w], m_dep[w+1], m_dep[w+2]]
+        for i in [0,1,2]:
+            print(m_check[-i][0],m_check[1-i][0], m_check[2-i][0])
+            if m_check[0-i][0] == ' ' and m_check[1-i][0] == m_check[2-i][0] == 'X':
+                return m_check[0-i][1]
+                pass
+            w += 1
+
+
+
     if m[1][1] == ' ':                              #if center is free, go for it
         return [1, 1]
     elif m[last_move[1]][last_move[0]] == ' ':
@@ -255,7 +303,7 @@ while menu != 3:
 
     else:
         if menu == 1:                                  # ai moves
-            move = player_b(matrix, move)
+            move = player_b(matrix, move, 'O')
             matrix = put_x(move , player , matrix)  # update matrix
             clr_scr()
         elif menu == 2:

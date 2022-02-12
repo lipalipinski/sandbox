@@ -10,10 +10,10 @@ This project started as a bootcamp assignment. Originally the requirements were 
 
 Some of the features I have added since then:
 
+  * AI improved
   * ##### Winner detection
   The game tells whether a player has won, or the final result is a tie.
   * ##### Artificial player
-  Still in development, but it's playable
   * ##### User move validation
   * ##### Bigger board  display  
   * ##### Single/multi-player
