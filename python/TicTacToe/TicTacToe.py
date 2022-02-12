@@ -3,6 +3,8 @@
 #                TicTacToe v1
 #                2022 by JL
 #========== DISPLAY MAIN MATRIX =============
+from random import randint
+
 def display(m):
 
     matrix =[
@@ -180,17 +182,31 @@ def player_b(m, last_move, player_mrk):
                 pass
             w += 1
 
+    q = []
 
+    while len(q) != 6:
+        p = randint(0,5)
+        if p not in q:
+            q.append(p)
 
-    if m[1][1] == ' ':                              #if center is free, go for it
-        return [1, 1]
-    elif m[last_move[1]][last_move[0]] == ' ':
-        return [last_move[1] , last_move[0]]
-    else:
-        for i in [0,1,2]:
-            for j in [0,1,2]:
-                if m[i][j] == ' ':
-                    return [i , j]
+    for i in q:
+        if i == 0 and m[1][1] == ' ':                              #if center is free, go for it
+            return [1 , 1]
+        elif i == 1 and m[0][0] == ' ':
+            return [0 , 0]
+        elif i == 2 and m[0][2] == '':
+            return [0 , 2]
+        elif i == 3 and m[2][0] == ' ':
+            return [2 , 0]
+        elif i == 4 and m[2][2] == ' ':
+            return [2 , 2]
+        elif i == 5 and m[last_move[1]][last_move[0]] == ' ':
+            return [last_move[1] , last_move[0]]
+
+    for i in [0,1,2]:
+        for j in [0,1,2]:
+            if m[i][j] == ' ':
+                return [i , j]
 
 
 
