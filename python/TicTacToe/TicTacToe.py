@@ -39,7 +39,7 @@ def display(m):
     '         /                 ][              ][               ',
     '         /                 ][              ][               ',
     '   /     /                 ][              ][               ',
-    '    /////                  ][              ][               ']
+    '    /////                  ][              ][               '] #W = 60ch
 
 
     large_x = [
@@ -237,6 +237,11 @@ def winner_check(m):
         return 'TIE'
 
     return False
+# ============= STAT DISPLAY =====================
+def stat_display(stats):
+    print('{0:>28} {1:>5} : {2:<5} {3:<28}\n\n'.format('Player X',stats[0], stats[1],'Player O'))
+    #print(f'Player X {x} : {y} Player O')
+
 
 
 #============== PLAY AGAIN PROMPT ================
@@ -252,7 +257,7 @@ def play_again(menu):
         return 0
 
 
-#============ GOOD BYE =========================
+#============ GOODBYE =========================
 def goodbye():
     print('\nBye! \nTicTacToe by JL 2022')
 #============ CLEAR SCREEN =====================
@@ -269,12 +274,14 @@ new_game = True
 first_move = True
 menu = 0
 
+
 while menu != 3:
 
     if new_game:
         clr_scr()
         if menu == 0:
-            menu = main_menu()                      # 1 - single player, 2 - multiplayer, 3 - quit
+            menu = main_menu()                  # 1 - single player, 2 - multiplayer, 3 - quit
+            stats = [0,0]                       # reset stats
         if menu == 3:
             break
 
@@ -295,6 +302,7 @@ while menu != 3:
         player = 'O'
 
     clr_scr()
+    stat_display(stats)
     if turn:                                    # human moves
         display(matrix)
         display_turn(player)                    # who's turn it is
@@ -316,7 +324,12 @@ while menu != 3:
 
 
     if winner_check(matrix) == True:
+        if turn == True:                        #update stats
+            stats[0] += 2
+        else:
+            stats[1] += 2
         clr_scr()
+        stat_display(stats)
         display(matrix)
         winner_check(matrix)                    # check if game has been won
         menu = play_again(menu)                     # yes = play again, no = show main menu
@@ -327,7 +340,10 @@ while menu != 3:
         pass
 
     else:
+        stats[0] += 1
+        stats[1] += 1
         clr_scr()
+        stat_display(stats)
         display(matrix)                         # if it's a REMIS
         print("\nIt's a tie!")                  # say it
         menu =  play_again(menu)            # ask for new game
