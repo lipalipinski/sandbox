@@ -4,24 +4,24 @@
 
 from random import randint
 
-x = randint(1,100)		#The Mystery Number
+x = randint(1,70)		#The Mystery Number
 delta = [10]			#list of differences between subsequent guesses and the mystery number. [0] is the initial warm/cold threshold
 guesses = []			#list of players guesses
 
 def player_guess():
 	"""
-	Asks player for an int within 1-100 range
+	Asks player for an int within 1-70 range
 	Prints "OUT OF BOUNDS!" if given value is not within a range
 	Returns int
 	"""
 	new_guess = None
-	while new_guess not in list(range(1,100)):
-			new_guess = input('Guess a number between 1 and 100:\n')
+	while new_guess not in list(range(1,70)):
+			new_guess = input('Guess a number between 1 and 70:\n')
 			if new_guess.isdigit() != True:
 				continue
 			else:
 				new_guess = int(new_guess)
-				if new_guess not in list(range(1,100)):		#checks if guess is within a given range
+				if new_guess not in list(range(1,70)):		#checks if guess is within a given range
 					print('OUT OF BOUNDS!')
 	return new_guess
 
@@ -61,17 +61,17 @@ def clr_scr():
 #=========== START ==================
 
 clr_scr()
-
 print('\nWelcome to the Guessing Game!\n')
 
 while len(guesses) == 0 or guesses[-1] != x:
+
 
 	guesses.append(player_guess())							#getting a guess
 	delta.append(abs(x - guesses[-1]))
 	print('')
 
 	if guesses[-1] != x:
-		chart_plot(guesses, x, 100)								#progress chart
+		chart_plot(guesses, x, 70)								#progress chart
 
 		if len(guesses) == 1: 									#the first guess
 			if delta[-1] < delta[-2]:
@@ -95,7 +95,7 @@ while len(guesses) == 0 or guesses[-1] != x:
 
 
 print('CONGRATULATIONS!')
-chart_plot(guesses, x, 100, 'y')
+chart_plot(guesses, x, 70, 'y')
 print('The mystery number is {}, it took you {} turns to find it!\n'.format(x, len(guesses)))
 
 print('\nGuessing Game by JL\n2022')

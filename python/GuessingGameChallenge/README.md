@@ -21,5 +21,8 @@ In **Guessing Game 2** I have made some improvements:
   * ignores the guess if guess value is the same as the previous one, and prompt "Give me something new" message.
   * asks for a value again if player puts non integer value as a guess or presses ENTER key without entering a number.
   * returns "WARM!" or "COLD!" if the distance between new guess and the previous one is the same. "WARM!" if the distance is smaller than two guesses before (or than the initial cold/warm threshold), "COLD!" otherwise.
+* v2.2:
+ * narrower version (guess from a range 1-70), suitable for 80 characters wide cmd console
+ * clear screen on the program start
 
 *JL 2022*
