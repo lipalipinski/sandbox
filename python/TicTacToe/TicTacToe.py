@@ -380,3 +380,4 @@ while menu != 3:
     turn = not turn                             # change player
 
 goodbye()
+clr_scr()
