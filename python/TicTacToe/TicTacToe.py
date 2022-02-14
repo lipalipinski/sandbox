@@ -81,10 +81,10 @@ def main_menu():
 
     option = 0
     logo =[
-    '  /////  /  ////    /////   /    ////    /////  ////  ////  ',
-    '    /    /  /    //   /    ///   /    //   /    /  /  ///   ',
-    '    /    /  ////      /   /   /  ////      /    ////  ////  ',
-    '                                                     by JL  ',
+    '  |/////||/||///|   |/////|  /  |///|   |/////||////||///|  ',
+    '    |/|  |/||/   ///  |/|   /_/ |/   ///  |/|  |/||/||//|   ',
+    '    |/|  |/||///|     |/|  /   /|///|     |/|  |////||///|  ',
+    '                                                  by JL     ',
     '                                                            ',
     '                                                            ']
 
@@ -119,6 +119,9 @@ def user_position(m):
 
         while move[0] not in range_123 or move[1] not in range_abc.keys():
             inp = input('Type your move (e.g. a1, b2), and hit [ENTER]: ')
+
+            if inp == 'Q':                                           # QUIT TO MENU
+                return False
 
             if len(inp) == 2:                                       #len(inp) check
                 move[1] = inp[0]
@@ -334,18 +337,28 @@ while menu != 3:
         display(matrix)
         display_turn(player)                    # who's turn it is
         move = user_position(matrix)
-        matrix = put_x(move , player , matrix)  # update matrix
+        if move == False:                       # Quit to the menu
+            menu = 0
+            new_game = True
+            pass
+        else:
+            matrix = put_x(move , player , matrix)  # update matrix
 
     else:
         if menu == 1:                                  # ai moves
             move = player_b(matrix, move, 'O')
             matrix = put_x(move , player , matrix)  # update matrix
             clr_scr()
-        elif menu == 2:
+        elif menu == 2:                             #
             display(matrix)
             display_turn(player)                    # who's turn it is
             move = user_position(matrix)
-            matrix = put_x(move , player , matrix)
+            if move == False:                       # Quit to the menu
+                menu = 0
+                new_game = True
+                pass
+            else:
+                matrix = put_x(move , player , matrix)  # update matrix
 
 
 
