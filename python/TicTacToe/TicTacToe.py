@@ -2,6 +2,7 @@
 #
 #                TicTacToe v1
 #                2022 by JL
+#
 #========== DISPLAY MAIN MATRIX =============
 from random import randint
 
@@ -79,10 +80,20 @@ def main_menu():
     '''
 
     option = 0
-    print('\nWelcome to TicTacToe by JL!\n')
+    logo =[
+    '  /////  /  ////    /////   /    ////    /////  ////  ////  ',
+    '    /    /  /    //   /    ///   /    //   /    /  /  ///   ',
+    '    /    /  ////      /   /   /  ////      /    ////  ////  ',
+    '                                                     by JL  ',
+    '                                                            ',
+    '                                                            ']
 
+    for line in logo:
+        print(line)
+
+    print('{0:^60}\n{1:^60}\n{2:^60}\n{3:^60}'.format('MENU:','1 - single player','2 - multi player','3 - quit')+'\n'*5)
     while option not in [1,2,3]:
-        choice = input('MENU:\n 1 - single player\n 2 - multi player\n 3 - quit\n')
+        choice = input()
         if choice.isdigit():
             option = int(choice)
         else:
