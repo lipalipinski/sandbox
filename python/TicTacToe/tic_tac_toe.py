@@ -71,10 +71,10 @@ class HumanPlayer(Player):
                     print('Entered value is not valid')
                     continue
 
-            move[1] = range_abc[move[1]]           # maping user-friendly input values to array
+            move[1] = range_abc[move[1]]  # maping user-friendly input values to array
             move[0] = move[0] - 1
 
-            if m[move[0]][move[1]] != ' ':                          # check if position is free
+            if m[move[0]][move[1]] != ' ':     # check if position is free
                 print('This position has already been taken')
                 continue
             else:
@@ -170,7 +170,8 @@ class AiPlayer(Player):
 # ======================== class menu ========================
 class Menu():
     '''
-    main menu class, holds game mode information (singleplayer/multiplayer/quit to menu)
+    main menu class, holds game mode information 
+    (singleplayer/multiplayer/quit to menu)
     '''
 
     def __init__(self):
