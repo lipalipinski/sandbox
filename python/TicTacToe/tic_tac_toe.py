@@ -33,7 +33,7 @@ class Player(ABC):
         return m
 
 
-# ===================== class human player =========================
+# ===================== class human player ====================
 class HumanPlayer(Player):
     '''
     Human player class
@@ -60,7 +60,7 @@ class HumanPlayer(Player):
                     if wanna in ['y', 'Y']:
                         return False
 
-                if len(inp) == 2:                                       # len(inp) check
+                if len(inp) == 2:                       # len(inp) check
                     move[1] = inp[0]
                 else:
                     continue
@@ -84,7 +84,7 @@ class HumanPlayer(Player):
         return m
 
 
-# ======================= class AI player =================================
+# ======================= class AI player =====================
 class AiPlayer(Player):
     '''
     Artifacial player class
@@ -108,7 +108,7 @@ class AiPlayer(Player):
 
         m_dep += m_depd + m_depx + m_depy
 
-        w = 0                                           # check for winning oportunity
+        w = 0              # check for winning oportunity
         while w < len(m_dep)-2:
             m_check = [m_dep[w], m_dep[w+1], m_dep[w+2]]
             for i in [0, 1, 2]:
@@ -167,10 +167,10 @@ class AiPlayer(Player):
                     return m
 
 
-# ======================== class menu ========================
+# ======================== class menu =========================
 class Menu():
     '''
-    main menu class, holds game mode information 
+    main menu class, holds game mode information
     (singleplayer/multiplayer/quit to menu)
     '''
 
@@ -367,7 +367,7 @@ class Board():
         print('\n')
 
 
-# ====================== THE GAME ============================
+# ====================== THE GAME =============================
 main_menu = Menu()
 
 while main_menu.state != 3:
