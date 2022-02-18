@@ -228,7 +228,7 @@ class Board():
         self.winner = None                      # None
         pass
 
-    def new_game(self):
+    def new_game(self):                         # initialise new game
         self.m = [[' ',' ',' '],                # [y,x]
                   [' ',' ',' '],
                   [' ',' ',' ']]
@@ -237,11 +237,11 @@ class Board():
         self.winner = None
         pass
 
-    def next_turn(self):
+    def next_turn(self):                        # chenge turn
         self.turn = not self.turn
         pass
 
-    def check(self):
+    def check(self):                            # check for winner
         '''
         check for winner / tie
         '''
