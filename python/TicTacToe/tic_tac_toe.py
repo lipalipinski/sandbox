@@ -7,13 +7,15 @@
 from abc import ABC, abstractmethod
 from random import randint
 
+
 def clr_scr():
     '''
     clears terinal by printing 100 empty lines
     '''
     print('\n'*100)
 
-#===================== abstr class player ====================
+
+# ===================== abstr class player ====================
 class Player(ABC):
     '''
     Abstract class for human and AI player class to inherit
@@ -30,7 +32,8 @@ class Player(ABC):
         '''
         return m
 
-#===================== class human player =========================
+
+# ===================== class human player =========================
 class HumanPlayer(Player):
     '''
     Human player class
@@ -40,11 +43,11 @@ class HumanPlayer(Player):
         '''
         asks for a move, returns updated 3x3 m
         '''
-        move = ['' , '']   #[Y, X]
-        range_123 = [1 , 2 , 3]
-        range_abc = {'a' : 0 , 'b' : 1 , 'c' : 2}
+        move = ['', '']   # [Y, X]
+        range_123 = [1, 2, 3]
+        range_abc = {'a': 0, 'b': 1, 'c': 2}
 
-        while True:                                      # check if desired position is free
+        while True:        # check if desired position is free
 
             while move[0] not in range_123 or move[1] not in range_abc.keys():
                 inp = input(f'Player {self.symbol}: type your move (e.g. a1, b2), and hit [ENTER]: ')
@@ -54,24 +57,22 @@ class HumanPlayer(Player):
                     while wanna not in ['y', 'Y', 'n', 'N']:
                         wanna = input('Do you want to quit game? (Y/N): ')
 
-
-                    if wanna in ['y' , 'Y']:
+                    if wanna in ['y', 'Y']:
                         return False
 
-                if len(inp) == 2:                                       #len(inp) check
+                if len(inp) == 2:                                       # len(inp) check
                     move[1] = inp[0]
                 else:
                     continue
 
-                if inp[1].isdigit() and int(inp[1]) in range_123:       #user input validation
+                if inp[1].isdigit() and int(inp[1]) in range_123:       # user input validation
                     move[0] = int(inp[1])
                 else:
                     print('Entered value is not valid')
                     continue
 
-
             move[1] = range_abc[move[1]]           # maping user-friendly input values to array
-            move[0] = move[0] -1
+            move[0] = move[0] - 1
 
             if m[move[0]][move[1]] != ' ':                          # check if position is free
                 print('This position has already been taken')
@@ -83,36 +84,34 @@ class HumanPlayer(Player):
         return m
 
 
-#======================= class AI player =================================
+# ======================= class AI player =================================
 class AiPlayer(Player):
     '''
     Artifacial player class
     '''
     def move(self, m):
 
-        move = None # [y,x]
+        move = None    # [y,x]
         m_dep = []
         m_depx = []
         m_depy = []
         m_depd = []
 
         i = 2
-        for x in [0,1,2]:
-            m_dep.append((m[x][x],(x,x)))
-            m_depd.append((m[i][x],(i,x)))
+        for x in [0, 1, 2]:
+            m_dep.append((m[x][x], (x, x)))
+            m_depd.append((m[i][x], (i, x)))
             i -= 1
-            for y in [0,1,2]:
-                m_depx.append((m[x][y],(x,y)))
-                m_depy.append((m[y][x],(y,x)))
-
+            for y in [0, 1, 2]:
+                m_depx.append((m[x][y], (x, y)))
+                m_depy.append((m[y][x], (y, x)))
 
         m_dep += m_depd + m_depx + m_depy
-
 
         w = 0                                           # check for winning oportunity
         while w < len(m_dep)-2:
             m_check = [m_dep[w], m_dep[w+1], m_dep[w+2]]
-            for i in [0,1,2]:
+            for i in [0, 1, 2]:
                 if m_check[0-i][0] == ' ' and m_check[1-i][0] == m_check[2-i][0] == self.symbol:
 
                     move = m_check[0-i][1]
@@ -121,10 +120,10 @@ class AiPlayer(Player):
 
                 w += 1
 
-        w = 0                                           # check for block oportunity
+        w = 0                                      # check for block oportunity
         while w < len(m_dep)-2:
             m_check = [m_dep[w], m_dep[w+1], m_dep[w+2]]
-            for i in [0,1,2]:
+            for i in [0, 1, 2]:
                 if m_check[0-i][0] == ' ' and m_check[1-i][0] == m_check[2-i][0] == 'X':
                     move = m_check[0-i][1]
                     m[move[0]][move[1]] = self.symbol
@@ -134,41 +133,41 @@ class AiPlayer(Player):
         q = []
 
         while len(q) != 5:
-            p = randint(0,4)
+            p = randint(0, 4)
             if p not in q:
                 q.append(p)
 
         for i in q:
             if i == 0 and m[1][1] == ' ':
-                move = (1 , 1)
+                move = (1, 1)
                 m[move[0]][move[1]] = self.symbol
                 return m
             elif i == 1 and m[0][0] == ' ':
-                move = (0 , 0)
+                move = (0, 0)
                 m[move[0]][move[1]] = self.symbol
                 return m
             elif i == 2 and m[0][2] == '':
-                move = (0 , 2)
+                move = (0, 2)
                 m[move[0]][move[1]] = self.symbol
                 return m
             elif i == 3 and m[2][0] == ' ':
-                move = (2 , 0)
+                move = (2, 0)
                 m[move[0]][move[1]] = self.symbol
                 return m
             elif i == 4 and m[2][2] == ' ':
-                move = (2 , 2)
+                move = (2, 2)
                 m[move[0]][move[1]] = self.symbol
                 return m
 
-        for i in [0,1,2]:
-            for j in [0,1,2]:
+        for i in [0, 1, 2]:
+            for j in [0, 1, 2]:
                 if m[i][j] == ' ':
-                    move = (i , j)
+                    move = (i, j)
                     m[move[0]][move[1]] = self.symbol
                     return m
 
 
-#======================== class menu ========================
+# ======================== class menu ========================
 class Menu():
     '''
     main menu class, holds game mode information (singleplayer/multiplayer/quit to menu)
@@ -181,21 +180,21 @@ class Menu():
         '''
         1 - single player, 2- multiplayer 3, quit
         '''
-        logo =[
-        '  |/////||/||///|   |/////|  /  |///|   |/////||////||///|  ',
-        '    |/|  |/||/   ///  |/|   /_/ |/   ///  |/|  |/||/||//|   ',
-        '    |/|  |/||///|     |/|  /   /|///|     |/|  |////||///|  ',
-        '                                                  by JL     ',
-        '                                                            ',
-        '                                                            ']
+        logo = [
+            '  |/////||/||///|   |/////|  /  |///|   |/////||////||///|  ',
+            '    |/|  |/||/   ///  |/|   /_/ |/   ///  |/|  |/||/||//|   ',
+            '    |/|  |/||///|     |/|  /   /|///|     |/|  |////||///|  ',
+            '                                                  by JL     ',
+            '                                                            ',
+            '                                                            ']
 
         clr_scr()
         for line in logo:
             print(line)
 
-        print('{0:^60}\n{1:^60}\n{2:^60}\n{3:^60}'.format('MENU:','1 - single player','2 - multi player','3 - quit')+'\n'*5)
+        print('{0:^60}\n{1:^60}\n{2:^60}\n{3:^60}'.format('MENU:', '1 - single player', '2 - multi player', '3 - quit')+'\n'*5)
 
-        while self.state not in [1,2,3]:
+        while self.state not in [1, 2, 3]:
             choice = input()
             if choice.isdigit():
                 self.state = int(choice)
@@ -210,8 +209,7 @@ class Menu():
         while wanna not in ['y', 'Y', 'n', 'N']:
             wanna = input('Do you want play again (Y/N): ')
 
-
-        if wanna in ['y' , 'Y']:
+        if wanna in ['y', 'Y']:
             pass
         else:
             self.state = 0
@@ -222,7 +220,8 @@ class Menu():
         '''
         self.state = 0
 
-#====================== class board ==========================
+
+# ====================== class board ==========================
 class Board():
     '''
     main game object
@@ -230,17 +229,17 @@ class Board():
     def __init__(self):
         self.m = []                             # [y,x] 3x3
         self.match_counter = 0
-        self.first_turn = randint(0,1) == 1     # first turn randomisation
-        self.turn = None                        # True - player_x / False - player_o
+        self.first_turn = randint(0, 1) == 1     # first turn randomisation
+        self.turn = None                   # True - player_x / False - player_o
         self.winner = None                      # None
 
     def new_game(self):
         '''
         nitialise new game
         '''
-        self.m = [[' ',' ',' '],                # [y,x]
-                  [' ',' ',' '],
-                  [' ',' ',' ']]
+        self.m = [[' ', ' ', ' '],                # [y,x]
+                  [' ', ' ', ' '],
+                  [' ', ' ', ' ']]
         self.first_turn = not self.first_turn   # make the other player begin
         self.turn = self.first_turn
         self.winner = None
@@ -262,11 +261,11 @@ class Board():
         m_depd = []
 
         i = 2
-        for x in [0,1,2]:
+        for x in [0, 1, 2]:
             m_dep.append(self.m[x][x])
             m_depd.append(self.m[i][x])
             i -= 1
-            for y in [0,1,2]:
+            for y in [0, 1, 2]:
                 m_depx.append(self.m[x][y])
                 m_depy.append(self.m[y][x])
 
@@ -278,7 +277,7 @@ class Board():
                 self.winner = m_dep[w]
             w += 3
 
-        for i, char in enumerate(m_dep):                          # tie case check
+        for i, char in enumerate(m_dep):                 # tie case check
             if char == ' ':
                 break
         else:
@@ -289,62 +288,60 @@ class Board():
         stats1,2 - players scores
         displays game board in terminal
         '''
-        matrix =[
-        '                  /////        /////////        ///////     ',
-        '                 /     /        /       /      /            ',
-        '                /       /       /       /      /            ',
-        '                /////////       ////////       /            ',
-        '                /       /       /       /      /            ',
-        '                /       /       /       /      /            ',
-        '               ///     ///     /////////        ///////     ',
-        '                                                            ',
-        '       /                   ][              ][               ',
-        '     / /                   ][              ][               ',
-        '    /  /                   ][              ][               ',
-        '       /                   ][              ][               ',
-        '       /                   ][              ][               ',
-        '       /                   ][              ][               ',
-        '       /                   ][              ][               ',
-        '      ///                  ][              ][               ',
-        '             ============================================== ',
-        '                           ][              ][               ',
-        '    /////                  ][              ][               ',
-        '   /     /                 ][              ][               ',
-        '         /                 ][              ][               ',
-        '        /                  ][              ][               ',
-        '       /                   ][              ][               ',
-        '     /                     ][              ][               ',
-        '   ///////                 ][              ][               ',
-        '             ============================================== ',
-        '    /////                  ][              ][               ',
-        '   /     /                 ][              ][               ',
-        '         /                 ][              ][               ',
-        '    /////                  ][              ][               ',
-        '         /                 ][              ][               ',
-        '         /                 ][              ][               ',
-        '   /     /                 ][              ][               ',
-        '    /////                  ][              ][               '] #W = 60ch
-
+        matrix = [
+            '                  /////        /////////        ///////     ',
+            '                 /     /        /       /      /            ',
+            '                /       /       /       /      /            ',
+            '                /////////       ////////       /            ',
+            '                /       /       /       /      /            ',
+            '                /       /       /       /      /            ',
+            '               ///     ///     /////////        ///////     ',
+            '                                                            ',
+            '       /                   ][              ][               ',
+            '     / /                   ][              ][               ',
+            '    /  /                   ][              ][               ',
+            '       /                   ][              ][               ',
+            '       /                   ][              ][               ',
+            '       /                   ][              ][               ',
+            '       /                   ][              ][               ',
+            '      ///                  ][              ][               ',
+            '             ============================================== ',
+            '                           ][              ][               ',
+            '    /////                  ][              ][               ',
+            '   /     /                 ][              ][               ',
+            '         /                 ][              ][               ',
+            '        /                  ][              ][               ',
+            '       /                   ][              ][               ',
+            '     /                     ][              ][               ',
+            '   ///////                 ][              ][               ',
+            '             ============================================== ',
+            '    /////                  ][              ][               ',
+            '   /     /                 ][              ][               ',
+            '         /                 ][              ][               ',
+            '    /////                  ][              ][               ',
+            '         /                 ][              ][               ',
+            '         /                 ][              ][               ',
+            '   /     /                 ][              ][               ',
+            '    /////                  ][              ][               ']  # W = 60ch
 
         large_x = [
-        r'  \\    // ',
-        r'   \\  //  ',
-        r'    \\//   ',
-        r'    //\\   ',
-        r'   //  \\  ',
-        r'  //    \\ ']
+            r'  \\    // ',
+            r'   \\  //  ',
+            r'    \\//   ',
+            r'    //\\   ',
+            r'   //  \\  ',
+            r'  //    \\ ']
 
         large_o = [
-        r'  //====\\  ',
-        r' //      \\ ',
-        r' ||      || ',
-        r' ||      || ',
-        r' \\      // ',
-        r'  \\====//  ']
+            r'  //====\\  ',
+            r' //      \\ ',
+            r' ||      || ',
+            r' ||      || ',
+            r' \\      // ',
+            r'  \\====//  ']
 
-
-        for y in [0,1,2]:      #row
-            for x in [0,1,2]:  #column
+        for y in [0, 1, 2]:      # row
+            for x in [0, 1, 2]:  # column
                 if self.m[y][x] == 'O':
                     for i, line in enumerate(large_o):
                         matrix[9+(y*9)+i] = matrix[9+(y*9)+i][:(14+(16*x))] + line + matrix[10+(y*9)+i][26+(16*x):]
@@ -355,7 +352,7 @@ class Board():
         clr_scr()
 
         print(' '*12+'{0:^48}'.format(f'Match {self.match_counter}'))
-        print('{0:>28} {1:>5} : {2:<5} {3:<28}\n'.format('Player X',score1, score2,'Player O'))
+        print('{0:>28} {1:>5} : {2:<5} {3:<28}\n'.format('Player X', score1, score2, 'Player O'))
         for line in matrix:
             print(line)
 
@@ -367,6 +364,8 @@ class Board():
             pass
 
         print('\n')
+
+
 # ====================== THE GAME ============================
 main_menu = Menu()
 
@@ -413,7 +412,6 @@ while main_menu.state != 3:
         elif game.winner == 0:
             player_x.score += 1
             player_o.score += 1
-
 
         game.display(player_x.score, player_o.score)
         main_menu.play_again()
