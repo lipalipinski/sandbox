@@ -43,8 +43,17 @@ class HumanPlayer(Player):
             while move[0] not in range_123 or move[1] not in range_abc.keys():
                 inp = input(f'Player {self.symbol}: type your move (e.g. a1, b2), and hit [ENTER]: ')
 
-                #if inp == 'Q':                                           # QUIT TO MENU !!!!!!!!!!!!!!!!!!!!!!!!!
-                #    return False
+                if inp == 'Q':                                  # QUIT TO MENU
+                    wanna = ''
+                    while wanna not in ['y', 'Y', 'n', 'N']:
+                        wanna = input('Do you want to quit game? (Y/N): ')
+
+
+                    if wanna in ['y' , 'Y']:
+                        return False
+                    else:
+                        pass
+
 
                 if len(inp) == 2:                                       #len(inp) check
                     move[1] = inp[0]
@@ -202,7 +211,11 @@ class Menu():
             pass
         else:
             self.state = 0
-        return
+        pass
+
+    def quit(self):
+        self.state = 0
+        pass
 
 #====================== class board ==========================
 class Board():
@@ -374,9 +387,14 @@ while main_menu.state != 3:
     game.display(player_x.score, player_o.score)
 
     if game.turn == True:           # player_x turn
-        game.m = player_x.move(game.m)
+        move = player_x.move(game.m)
     else:
-        game.m = player_o.move(game.m)
+        move = player_o.move(game.m)
+
+    if move == False:                               # quit to main menu
+        main_menu.quit()
+    else:
+        game.m = move
 
     game.display(player_x.score, player_o.score)
     game.check()
