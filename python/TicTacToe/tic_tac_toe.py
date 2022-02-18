@@ -1,42 +1,48 @@
-#============================================
-#
-#                TicTacToe v2
-#                 v2022 by JL
-#
-#========== DISPLAY MAIN MATRIX =============
+'''
+            ===================
+            |   TicTacToe v2  |
+            |    v2022 by JL  |
+            ===================
+'''
+from abc import ABC, abstractmethod
 from random import randint
 
 def clr_scr():
+    '''
+    clears terinal by printing 100 empty lines
+    '''
     print('\n'*100)
-    pass
 
 #===================== abstr class player ====================
-class Player():
+class Player(ABC):
+    '''
+    Abstract class for human and AI player class to inherit
+    '''
 
     def __init__(self, symbol):
-         self.symbol = symbol       # str 'X'/'O'
-         self.score = 0             # match score
-         pass
+        self.symbol = symbol       # str 'X'/'O'
+        self.score = 0             # match score
 
-    def move(self, m):           # m - current 3x3
+    @abstractmethod
+    def move(self, m):
         '''
-        Returns 3x3 updated with a valid move
+        takes 3x3 list, puts self.symbol as a move, returns updated 3x3 list
         '''
         return m
 
 #===================== class human player =========================
 class HumanPlayer(Player):
+    '''
+    Human player class
+    '''
 
     def move(self, m):
         '''
         asks for a move, returns updated 3x3 m
         '''
-
         move = ['' , '']   #[Y, X]
         range_123 = [1 , 2 , 3]
         range_abc = {'a' : 0 , 'b' : 1 , 'c' : 2}
-        free = False
-
 
         while True:                                      # check if desired position is free
 
@@ -51,9 +57,6 @@ class HumanPlayer(Player):
 
                     if wanna in ['y' , 'Y']:
                         return False
-                    else:
-                        pass
-
 
                 if len(inp) == 2:                                       #len(inp) check
                     move[1] = inp[0]
@@ -67,7 +70,7 @@ class HumanPlayer(Player):
                     continue
 
 
-            move[1] = range_abc[move[1]]                            # maping user-friendly input values to array
+            move[1] = range_abc[move[1]]           # maping user-friendly input values to array
             move[0] = move[0] -1
 
             if m[move[0]][move[1]] != ' ':                          # check if position is free
@@ -82,7 +85,9 @@ class HumanPlayer(Player):
 
 #======================= class AI player =================================
 class AiPlayer(Player):
-
+    '''
+    Artifacial player class
+    '''
     def move(self, m):
 
         move = None # [y,x]
@@ -99,7 +104,6 @@ class AiPlayer(Player):
             for y in [0,1,2]:
                 m_depx.append((m[x][y],(x,y)))
                 m_depy.append((m[y][x],(y,x)))
-                pass
 
 
         m_dep += m_depd + m_depx + m_depy
@@ -135,7 +139,7 @@ class AiPlayer(Player):
                 q.append(p)
 
         for i in q:
-            if i == 0 and m[1][1] == ' ':                              #if center is free, go for it
+            if i == 0 and m[1][1] == ' ':
                 move = (1 , 1)
                 m[move[0]][move[1]] = self.symbol
                 return m
@@ -166,10 +170,12 @@ class AiPlayer(Player):
 
 #======================== class menu ========================
 class Menu():
+    '''
+    main menu class, holds game mode information (singleplayer/multiplayer/quit to menu)
+    '''
 
     def __init__(self):
         self.state = 0
-        pass
 
     def display(self):
         '''
@@ -196,8 +202,6 @@ class Menu():
             else:
                 continue
 
-        pass
-
     def play_again(self):
         '''
         changes menu state to 0 if player doesn't want to play again
@@ -211,37 +215,43 @@ class Menu():
             pass
         else:
             self.state = 0
-        pass
 
     def quit(self):
+        '''
+        quit to menu during player's turn
+        '''
         self.state = 0
-        pass
 
 #====================== class board ==========================
 class Board():
-
+    '''
+    main game object
+    '''
     def __init__(self):
         self.m = []                             # [y,x] 3x3
         self.match_counter = 0
         self.first_turn = randint(0,1) == 1     # first turn randomisation
         self.turn = None                        # True - player_x / False - player_o
         self.winner = None                      # None
-        pass
 
-    def new_game(self):                         # initialise new game
+    def new_game(self):
+        '''
+        nitialise new game
+        '''
         self.m = [[' ',' ',' '],                # [y,x]
                   [' ',' ',' '],
                   [' ',' ',' ']]
         self.first_turn = not self.first_turn   # make the other player begin
         self.turn = self.first_turn
         self.winner = None
-        pass
 
-    def next_turn(self):                        # chenge turn
+    def next_turn(self):
+        '''
+        chenge turn
+        '''
         self.turn = not self.turn
-        pass
 
-    def check(self):                            # check for winner
+    def check(self):
         '''
         check for winner / tie
         '''
@@ -259,13 +269,8 @@ class Board():
             for y in [0,1,2]:
                 m_depx.append(self.m[x][y])
                 m_depy.append(self.m[y][x])
-                pass
-
 
         m_dep += m_depd + m_depx + m_depy
-
-
-
 
         w = 0
         while w < len(m_dep)-2:
@@ -273,15 +278,17 @@ class Board():
                 self.winner = m_dep[w]
             w += 3
 
-        for i in range(0, len(m_dep)):                          # tie case check
-            if m_dep[i] == ' ':
+        for i, char in enumerate(m_dep):                          # tie case check
+            if char == ' ':
                 break
         else:
             self.winner = 0
 
-        pass
-
-    def display(self, score1, score2): # stats1,2 - players scores
+    def display(self, score1, score2):
+        '''
+        stats1,2 - players scores
+        displays game board in terminal
+        '''
         matrix =[
         '                  /////        /////////        ///////     ',
         '                 /     /        /       /      /            ',
@@ -320,20 +327,20 @@ class Board():
 
 
         large_x = [
-        '  \\\    // ',
-        '   \\\  //  ',
-        '    \\\//   ',
-        '    //\\\   ',
-        '   //  \\\  ',
-        '  //    \\\\ ']
+        r'  \\    // ',
+        r'   \\  //  ',
+        r'    \\//   ',
+        r'    //\\   ',
+        r'   //  \\  ',
+        r'  //    \\ ']
 
         large_o = [
-        '  //====\\\  ',
-        ' //      \\\ ',
-        ' ||      || ',
-        ' ||      || ',
-        ' \\\\      // ',
-        '  \\\\====//  ']
+        r'  //====\\  ',
+        r' //      \\ ',
+        r' ||      || ',
+        r' ||      || ',
+        r' \\      // ',
+        r'  \\====//  ']
 
 
         for y in [0,1,2]:      #row
@@ -351,17 +358,15 @@ class Board():
         print('{0:>28} {1:>5} : {2:<5} {3:<28}\n'.format('Player X',score1, score2,'Player O'))
         for line in matrix:
             print(line)
-        pass
 
         if self.winner == 0:
-            print('\n'+' '*12+'{0:^48}'.format(f"Tie game!"))
-        elif self.winner != None:
+            print('\n'+' '*12+'{0:^48}'.format("Tie game!"))
+        elif self.winner is not None:
             print('\n'+' '*12+'{0:^48}'.format(f'Player {self.winner} has won!'))
         else:
             pass
 
         print('\n')
-
 # ====================== THE GAME ============================
 main_menu = Menu()
 
@@ -386,21 +391,21 @@ while main_menu.state != 3:
 
     game.display(player_x.score, player_o.score)
 
-    if game.turn == True:           # player_x turn
-        move = player_x.move(game.m)
-    else:
-        move = player_o.move(game.m)
+    if game.turn is True:                  # player_x turn
+        player_move = player_x.move(game.m)
+    else:                                  # player_o turn
+        player_move = player_o.move(game.m)
 
-    if move == False:                               # quit to main menu
+    if player_move is False:                               # quit to main menu
         main_menu.quit()
     else:
-        game.m = move
+        game.m = player_move
 
     game.display(player_x.score, player_o.score)
     game.check()
     game.next_turn()
 
-    if game.winner != None:
+    if game.winner is not None:
         if game.winner == 'X':
             player_x.score += 2
         elif game.winner == 'O':
