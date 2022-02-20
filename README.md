@@ -6,9 +6,6 @@ This repository contains simple, training projects I have created during courses
 ## Content overview
 More detailed information can be found in the README.md files in each project's directory.
 ### Python 3.9.7
- * #### TicTacToe
-
- A console game. Originally this was a milestone project on the Python bootcamp I took. I kept on adding new features, such as win detection, artifacial player etc.
 
  * #### Lotto Generator
 
